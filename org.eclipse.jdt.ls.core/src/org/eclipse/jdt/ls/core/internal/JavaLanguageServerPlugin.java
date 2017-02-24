@@ -12,10 +12,12 @@ package org.eclipse.jdt.ls.core.internal;
 
 import java.io.IOException;
 import java.util.stream.Stream;
+import java.util.Hashtable;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.WorkingCopyOwner;
 import org.eclipse.jdt.ls.core.internal.JavaClientConnection.JavaLanguageClient;
 import org.eclipse.jdt.ls.core.internal.handlers.JDTLanguageServer;
@@ -55,6 +57,7 @@ public class JavaLanguageServerPlugin implements BundleActivator {
 		JavaLanguageServerPlugin.context = bundleContext;
 		JavaLanguageServerPlugin.pluginInstance = this;
 		preferenceManager = new PreferenceManager();
+		initializeJDTOptions();
 		projectsManager = new ProjectsManager(preferenceManager);
 		logInfo(getClass()+" is started");
 	}
@@ -140,6 +143,16 @@ public class JavaLanguageServerPlugin implements BundleActivator {
 		}
 	}
 
+	/**
+	 * Initialize default preference values of used bundles to match
+	 * server functionality.
+	 */
+	private void initializeJDTOptions() {
+		// Update JavaCore options
+		Hashtable<String, String> javaCoreOptions = JavaCore.getOptions();
+		javaCoreOptions.put(JavaCore.CODEASSIST_VISIBILITY_CHECK, JavaCore.ENABLED);
+		JavaCore.setOptions(javaCoreOptions);
+	}
 
 	/**
 	 * @return
