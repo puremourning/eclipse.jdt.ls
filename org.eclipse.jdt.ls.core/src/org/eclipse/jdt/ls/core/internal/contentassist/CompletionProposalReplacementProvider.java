@@ -209,14 +209,16 @@ public class CompletionProposalReplacementProvider {
 		// we're inserting a method plus the argument list - respect formatter preferences
 		appendMethodNameReplacement(buffer, proposal);
 
-		if (hasParameters(proposal)) {
-			appendGuessingCompletion(buffer, proposal);
-		}
+        if ( false ) {
+          if (hasParameters(proposal)) {
+              appendGuessingCompletion(buffer, proposal);
+          }
 
-		buffer.append(RPAREN);
+          buffer.append(RPAREN);
 
-		if (canAutomaticallyAppendSemicolon(proposal))
-			buffer.append(SEMICOLON);
+          if (canAutomaticallyAppendSemicolon(proposal))
+              buffer.append(SEMICOLON);
+        }
 	}
 
 	private boolean hasParameters(CompletionProposal proposal) throws IllegalArgumentException {
@@ -235,7 +237,9 @@ public class CompletionProposalReplacementProvider {
 		if (proposal.getKind() != CompletionProposal.CONSTRUCTOR_INVOCATION)
 			buffer.append(proposal.getName());
 
-		buffer.append(LPAREN);
+        if ( false ) {
+          buffer.append(LPAREN);
+        }
 	}
 
 	private void appendGuessingCompletion(StringBuilder buffer, CompletionProposal proposal) {
